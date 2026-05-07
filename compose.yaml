@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  mariadb:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: thedas_auth-db
+      MARIADB_ROOT_PASSWORD: my-secret-pw
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: my-secret-pw
+    ports:
+      - "3306:3306"
+    volumes:
+      - thedas_auth-data:/var/lib/mysql
+
+volumes:
+  thedas_auth-data:
