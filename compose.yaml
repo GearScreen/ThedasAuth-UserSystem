@@ -1,17 +1,42 @@
 version: '3.8'
 services:
-  mariadb:
+  db:
     image: mariadb:latest
     restart: always
     environment:
-      MYSQL_DATABASE: thedas_auth-db
-      MARIADB_ROOT_PASSWORD: my-secret-pw
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: my-secret-pw
+      - MYSQL_DATABASE=${DB_NAME}
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
     ports:
-      - "3306:3306"
+      - 3306:3306
     volumes:
       - thedas_auth-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - auth-network
+
+  app:
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - AUTH_SECRET=${AUTH_SECRET}
+      - AUTH_GITHUB_ID=${AUTH_GITHUB_ID}
+      - AUTH_GITHUB_SECRET=${AUTH_GITHUB_SECRET}
+      - DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/${DB_NAME}
+      - AUTH_URL=${AUTH_URL}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - auth-network
 
 volumes:
   thedas_auth-data:
+
+networks:
+  auth-network:
+    driver: bridge

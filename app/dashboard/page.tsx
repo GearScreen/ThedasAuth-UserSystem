@@ -2,7 +2,6 @@
 
 import { useSession } from "next-auth/react"
 
-// import { useState, useEffect } from 'react'
 import Image from "next/image";
 import Link from 'next/link';
 
@@ -16,16 +15,15 @@ export default function Home() {
                     {/* TITLE BLOCK */}
                     <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
                         <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-                            Logged in Page
+                            Dashboard
                         </h1>
                         <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-                            Display user data
+                            Display custom user data
                         </p>
                     </div>
                     {/* NAVIGATION */}
                     <div className="flex flex-col gap-4 text-base font-medium sm:flex-row" style={{ paddingTop: '10%' }}>
-                        <Link className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background
-                    transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
+                        <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                             href="/">
                             <Image
                                 className="dark:invert"
@@ -33,20 +31,15 @@ export default function Home() {
                                 alt="Vercel logomark"
                                 width={16}
                                 height={16}
+                                style={{ height: "auto" }}
                             />
                             Main Page
-                        </Link>
-                        <Link className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08]
-                    px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-                            href="/login">
-                            Logout
                         </Link>
                     </div>
                 </main>
             ) : (
-                <Link className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08]
-                    px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-                    href="/login">
+                <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    href="/">
                     Login before accessing this page
                 </Link>
             )}
