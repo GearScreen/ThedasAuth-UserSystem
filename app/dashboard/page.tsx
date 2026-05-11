@@ -5,6 +5,26 @@ import { useSession } from "next-auth/react"
 import Image from "next/image";
 import Link from 'next/link';
 
+const tryDeleteAccount = async () => {
+    try {
+        const response = await fetch('/api/users/delete-data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        })
+
+        const data = await response.json()
+        if (data.success) {
+            alert(data.message)
+            // console.log('Account deletion response:', data.message)
+        } else {
+            // alert(`Error: ${data.error}`)
+            console.log(`Error: ${data.error}`)
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error)
+    }
+}
+
 export default function Home() {
     const { data: session } = useSession()
 
@@ -35,6 +55,9 @@ export default function Home() {
                             />
                             Main Page
                         </Link>
+                    </div>
+                    <div className="flex flex-col gap-4 text-base font-medium sm:flex-row" style={{ paddingTop: '10%' }}>
+                        <button onClick={tryDeleteAccount} className="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded" >Delete Data</button>
                     </div>
                 </main>
             ) : (

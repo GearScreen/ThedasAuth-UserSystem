@@ -8,6 +8,7 @@
 -Signin using Google or Github<br>
 -User Sessions<br>
 -Store users + custom data in MariaDB<br>
+-Delete all your data<br>
 
 ## How to test
 
